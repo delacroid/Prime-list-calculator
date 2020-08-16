@@ -1,0 +1,64 @@
+import math
+import numpy as np
+import time
+
+
+#Vamos a crear una función auxiliar que nos diga el índice a partir del cual 
+#sobrepasamos sqrt(i)
+def auxiliar_indice(array,tope):
+  lim=math.floor(math.sqrt(tope))
+  i=0
+  while array[i]<=lim and i<len(array):
+    i=i+1
+  return i 
+
+
+# Este script nos da una lista de numeros primos hasta el numero n elegido.
+def lista_primos_mejorada(n):
+  if n<2:
+    print("¿Te estás cachondeando de mi sosio?")
+    return 0
+  elif n==2:
+
+    return np.array([2])
+  else:
+    array_primos=np.array([2,])
+    for i in range(3,n+1):
+      indice_optimo=auxiliar_indice(array_primos,i)
+      array_restos=i%array_primos[:indice_optimo+1]
+     
+    
+      busca0=np.amin(array_restos)
+      #Si el resto es 0, significa que i es divisible entre esa entrada,
+      #tenemos que ver pues, si no es divisible entre ningún primo
+      if busca0!=0:
+        array_primos=np.append(array_primos,i)
+        
+    return array_primos
+#Comprobemos el tiempo que nos llevaría no hacer la comprobación de la raíz cuadrada
+def lista_primos(n):
+  if n<2:
+    print("¿Te estás cachondeando de mi sosio?")
+    return 0
+  elif n==2:
+
+    return np.array([2])
+  else:
+    array_primos=np.array([2,])
+    for i in range(3,n+1):
+      array_restos=i%array_primos
+     
+    
+      busca0=np.amin(array_restos)
+      #Si el resto es 0, significa que i es divisible entre esa entrada,
+      #tenemos que ver pues, si no es divisible entre ningún primo
+      if busca0!=0:
+        array_primos=np.append(array_primos,i)
+        
+    return array_primos 
+start_time=time.clock()
+lista_primos(100000)
+print(time.clock()-start_time)
+start_time=time.clock()
+lista_primos_mejorada(100000)
+print(time.clock()-start_time)
